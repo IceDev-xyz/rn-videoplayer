@@ -30,6 +30,16 @@ export default ({ navigation, route }) => {
   const [subtitles, setSubtitles] = useState(0);
   const [disabledSubtitles, setDisabledSubtitles] = useState([]);
   const [selectedSubtitle, setSelectedSubtitle] = useState("none");
+  //
+  const [isNavigating, setIsNavigating] = useState(true);
+
+  // The video library is making navigation between screens slower, this is just a hot fix.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsNavigating(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // I'm not proud about this function, just wanted to show a bit of functionality.
   useEffect(() => {
@@ -86,33 +96,37 @@ export default ({ navigation, route }) => {
         //rightComponent={{ icon: "home", color: "#fff" }}
         containerStyle={mainStyles.headerContainer}
       />
-      <Video
-        source={{
-          uri: video.videoUrl,
-        }}
-        // ref={(ref) => {
-        //   this.player = ref;
-        // }}
-        controls={true}
-        poster={video.thumb}
-        //fullscreen={true}
-        onLoadStart={(info) => console.log(info)}
-        onLoad={(info) => console.log(info)}
-        onBuffer={(buffer) => console.log(buffer)}
-        onEnd={(info) => console.log(info)}
-        onError={(error) => alert("We are unable to load this video.")}
-        style={fullScreen ? styles.videoFs : styles.video}
-        onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
-        playInBackground={false}
-        onEnd={(info) => console.log(info)}
-        ///
-        resizeMode={"cover"}
-        textTracks={video.subs}
-        selectedTextTrack={{
-          type: "language",
-          value: selectedSubtitle,
-        }}
-      />
+      {isNavigating ? (
+        <View style={styles.video} />
+      ) : (
+        <Video
+          source={{
+            uri: video.videoUrl,
+          }}
+          // ref={(ref) => {
+          //   this.player = ref;
+          // }}
+          controls={true}
+          poster={video.thumb}
+          //fullscreen={true}
+          onLoadStart={(info) => console.log(info)}
+          onLoad={(info) => console.log(info)}
+          onBuffer={(buffer) => console.log(buffer)}
+          onEnd={(info) => console.log(info)}
+          onError={(error) => alert("We are unable to load this video.")}
+          style={fullScreen ? styles.videoFs : styles.video}
+          onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
+          playInBackground={false}
+          onEnd={(info) => console.log(info)}
+          ///
+          resizeMode={"cover"}
+          textTracks={video.subs}
+          selectedTextTrack={{
+            type: "language",
+            value: selectedSubtitle,
+          }}
+        />
+      )}
       {!fullScreen && (
         <ButtonGroup
           onPress={(index) => setSubtitles(index)}

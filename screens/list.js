@@ -25,10 +25,8 @@ import mainStyles, { colors } from "../resources/styles";
 
 export default ({ navigation }) => {
   navigateToVideo = (video) => {
-    console.log(video);
     navigation.navigate("Video", {
       video: video,
-      subs: video.subs,
     });
   };
 
@@ -46,36 +44,39 @@ export default ({ navigation }) => {
         //rightComponent={{ icon: "home", color: "#fff" }}
         containerStyle={mainStyles.headerContainer}
       />
-      {videoList.map((item, i) => (
-        <ListItem
-          onPress={() => navigateToVideo(item)}
-          underlayColor={"transparent"}
-          containerStyle={styles.listItemContainer}
-        >
-          <Avatar
-            rounded
-            source={{
-              uri: item.thumb,
-            }}
-          />
-          <ListItem.Content>
-            <ListItem.Title style={styles.title}>{item.title}</ListItem.Title>
-            <ListItem.Title style={styles.subtitle}>
-              {item.subtitle}
-            </ListItem.Title>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem>
-      ))}
+      <ScrollView>
+        {videoList.map((item, i) => (
+          <ListItem
+            onPress={() => navigateToVideo(item)}
+            underlayColor={"transparent"}
+            containerStyle={styles.listItemContainer}
+          >
+            <Avatar
+              rounded
+              source={{
+                uri: item.thumb,
+              }}
+            />
+            <ListItem.Content>
+              <ListItem.Title style={styles.title}>{item.title}</ListItem.Title>
+              <ListItem.Title style={styles.subtitle}>
+                {item.subtitle}
+              </ListItem.Title>
+            </ListItem.Content>
+            <ListItem.Chevron />
+          </ListItem>
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   listItemContainer: {
-    backgroundColor: colors.complementary + "20",
+    backgroundColor: colors.complementary + "50",
     borderRadius: 10,
-    marginBottom: 5,
+    marginBottom: 10,
+    marginHorizontal: 10,
   },
   title: {
     fontSize: 20,
