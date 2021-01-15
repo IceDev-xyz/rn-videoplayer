@@ -19,13 +19,16 @@ import {
   Input,
   Icon,
 } from "react-native-elements";
-import Video, { TextTrackType } from "react-native-video";
 
+import { AppContext } from "../resources/context";
 import mainStyles, { colors } from "../resources/styles";
 
 export default ({ navigation }) => {
-  navigateToVideo = (video) => {
+  const { context, setContext } = useContext(AppContext);
+
+  navigateToVideo = (video, videoIndex) => {
     navigation.navigate("Video", {
+      videoIndex: videoIndex,
       video: video,
     });
   };
@@ -45,9 +48,9 @@ export default ({ navigation }) => {
         containerStyle={mainStyles.headerContainer}
       />
       <ScrollView>
-        {videoList.map((item, i) => (
+        {context.map((item, index) => (
           <ListItem
-            onPress={() => navigateToVideo(item)}
+            onPress={() => navigateToVideo(item, index)}
             underlayColor={"transparent"}
             containerStyle={styles.listItemContainer}
           >
@@ -60,7 +63,7 @@ export default ({ navigation }) => {
             <ListItem.Content>
               <ListItem.Title style={styles.title}>{item.title}</ListItem.Title>
               <ListItem.Title style={styles.subtitle}>
-                {item.subtitle}
+                {item?.progress}
               </ListItem.Title>
             </ListItem.Content>
             <ListItem.Chevron />
@@ -89,51 +92,3 @@ const styles = StyleSheet.create({
     color: colors.cgpGrey[400],
   },
 });
-
-const videoList = [
-  {
-    _id: "TBD",
-    title: "Awesome Video",
-    subtitle: "Works fine, subs in EN & ES",
-    thumb:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg",
-    videoUrl: "https://arcticlab.xyz/demos/rn-videoplayer/switzerland.mp4",
-    subs: [
-      {
-        title: "English CC",
-        language: "en",
-
-        uri: "https://arcticlab.xyz/demos/rn-videoplayer/en.vtt",
-      },
-      {
-        title: "Español",
-        language: "es",
-        uri: "https://arcticlab.xyz/demos/rn-videoplayer/es.vtt",
-      },
-    ],
-  },
-  {
-    _id: "TBD2",
-    title: "Another nice video",
-    subtitle: "Works fine, subs in only in ES",
-    thumb:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg",
-    videoUrl: "https://arcticlab.xyz/demos/rn-videoplayer/switzerland.mp4",
-    subs: [
-      {
-        title: "Español",
-        language: "es",
-        uri: "https://arcticlab.xyz/demos/rn-videoplayer/sintel_es.vtt",
-      },
-    ],
-  },
-  {
-    _id: "TBD3",
-    title: "Oh! Bad video",
-    subtitle: "URL wrong, video won't load.",
-    thumb:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg",
-    videoUrl: "https://arcticlab.xyz/demos/rn-videoplayer/_switzerland.mp4",
-    subs: [],
-  },
-];
