@@ -44,19 +44,10 @@ const videoList = [
     subtitle: "Works fine, subs in EN & ES",
     thumb: `${demoURL}thumb-switzerland.jpg`,
     videoUrl: `${demoURL}switzerland.mp4`,
-    subs: [
-      {
-        title: "English CC",
-        language: "en",
-
-        uri: `${demoURL}en.vtt`,
-      },
-      {
-        title: "Español",
-        language: "es",
-        uri: `${demoURL}es.vtt`,
-      },
-    ],
+    subs: {
+      en: `${demoURL}en.vtt`,
+      es: `${demoURL}es.vtt`,
+    },
   },
   {
     _id: "TBD2",
@@ -64,13 +55,9 @@ const videoList = [
     subtitle: "Works fine, subs in only in ES",
     thumb: `${demoURL}thumb-seattle.webp`,
     videoUrl: `${demoURL}seattle.mp4`,
-    subs: [
-      {
-        title: "Español",
-        language: "es",
-        uri: `${demoURL}es.vtt`,
-      },
-    ],
+    subs: {
+      es: `${demoURL}es.vtt`,
+    },
   },
   {
     _id: "TBD3",
@@ -78,7 +65,7 @@ const videoList = [
     subtitle: "4K, should take a bit to load.",
     thumb: `${demoURL}thumb_vancouver.jpg`,
     videoUrl: `${demoURL}vancouver.mp4`,
-    subs: [],
+    subs: null,
   },
   {
     _id: "TBD4",
@@ -86,6 +73,6 @@ const videoList = [
     subtitle: "URL wrong, video won't load.",
     thumb: `${demoURL}thumb_not_found.jpg`,
     videoUrl: `${demoURL}not_found.mp4`,
-    subs: [],
+    subs: null,
   },
 ];

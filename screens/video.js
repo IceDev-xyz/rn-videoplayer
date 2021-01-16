@@ -1,14 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
   SafeAreaView,
-  Keyboard,
   StyleSheet,
   ScrollView,
   View,
   Text,
-  ImageBackground,
   useWindowDimensions,
-  StatusBar,
   Modal,
 } from "react-native";
 import {
@@ -16,9 +13,7 @@ import {
   Button,
   Divider,
   Header,
-  ListItem,
   Input,
-  Icon,
 } from "react-native-elements";
 import Video, { TextTrackType } from "react-native-video";
 import SwipeableRating from "react-native-swipeable-rating";
@@ -29,14 +24,16 @@ import mainStyles, { colors } from "../resources/styles";
 export default ({ navigation, route }) => {
   const { context, setContext } = useContext(AppContext);
   const { video, videoIndex } = route.params;
+  //
   const [fullScreen, setFullScreen] = useState(false);
+  const [textTracks, setTextTracks] = useState([]);
   const [subtitles, setSubtitles] = useState(0);
   const [disabledSubtitles, setDisabledSubtitles] = useState([]);
   const [selectedSubtitle, setSelectedSubtitle] = useState("none");
   const [modalVisible, setModalVisible] = useState(false);
   const [rating, setRating] = useState(5);
-  //
   const [isNavigating, setIsNavigating] = useState(true);
+  //
   const window = useWindowDimensions();
 
   // The video library is making navigation between screens slower, this is just a hot fix.
@@ -50,20 +47,35 @@ export default ({ navigation, route }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // I'm not proud about this function, just wanted to show a bit of functionality.
+  // I'm not proud about this function, quick workaround after Android was having issues with subtitles.
   useEffect(() => {
     let disabled = [];
-    let sub_en = video.subs.findIndex((element) => element.language == "en");
-    if (sub_en == -1) {
+    let tracks = [];
+    if (!video.subs?.en) {
       disabled.push(1);
+    } else {
+      tracks.push({
+        title: "English",
+        language: "en",
+        type: TextTrackType.VTT,
+        uri: video.subs.en,
+      });
     }
-    let sub_es = video.subs.findIndex((element) => element.language == "es");
-    if (sub_es == -1) {
+    if (!video.subs?.es) {
       disabled.push(2);
+    } else {
+      tracks.push({
+        title: "Spanish",
+        language: "es",
+        type: TextTrackType.VTT,
+        uri: video.subs.es,
+      });
     }
+    setTextTracks(tracks);
     setDisabledSubtitles(disabled);
   }, []);
 
+  // Making a manual, better fullscreen.
   useEffect(() => {
     let isLandscape;
     if (window.width > window.height) {
@@ -74,6 +86,7 @@ export default ({ navigation, route }) => {
     setFullScreen(isLandscape);
   }, [window.width]);
 
+  // Changing subs on the fly,
   useEffect(() => {
     let newSubtitle;
     switch (subtitles) {
@@ -106,7 +119,6 @@ export default ({ navigation, route }) => {
         >
           <Header
             barStyle="light-content"
-            //placement="left"
             leftComponent={{
               icon: "arrow-downward",
               type: "material",
@@ -117,7 +129,6 @@ export default ({ navigation, route }) => {
               text: "Feedback",
               style: mainStyles.headerTitle,
             }}
-            //rightComponent={{ icon: "home", color: "#fff" }}
             containerStyle={mainStyles.headerContainer}
           />
           <Text style={styles.txt_Feedback}>
@@ -161,7 +172,6 @@ export default ({ navigation, route }) => {
       </Modal>
       <Header
         barStyle="light-content"
-        //placement="left"
         leftComponent={{
           icon: "arrow-back",
           type: "material",
@@ -169,7 +179,6 @@ export default ({ navigation, route }) => {
           onPress: () => navigation.goBack(),
         }}
         centerComponent={{ text: video.title, style: mainStyles.headerTitle }}
-        //rightComponent={{ icon: "home", color: "#fff" }}
         containerStyle={mainStyles.headerContainer}
       />
 
@@ -203,7 +212,7 @@ export default ({ navigation, route }) => {
           }
           onError={() => alert("We are unable to load this video.")}
           onSeek={(info) => console.log(info)}
-          style={fullScreen ? styles.videoFs : styles.video}
+          style={fullScreen ? styles.videoFullscreen : styles.video}
           onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
           playInBackground={false}
           onEnd={() => [
@@ -216,15 +225,8 @@ export default ({ navigation, route }) => {
           ///
           automaticallyWaitsToMinimizeStalling
           preferredForwardBufferDuration={30000}
-          // bufferConfig={{
-          //   minBufferMs: 15000,
-          //   maxBufferMs: 50000,
-          //   bufferForPlaybackMs: 2500,
-          //   bufferForPlaybackAfterRebufferMs: 5000,
-          // }}
-          //
           resizeMode={"cover"}
-          textTracks={video.subs}
+          textTracks={textTracks}
           selectedTextTrack={{
             type: "language",
             value: selectedSubtitle,
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
   },
-  videoFs: {
+  videoFullscreen: {
     position: "absolute",
     top: 0,
     left: 0,
