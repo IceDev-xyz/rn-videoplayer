@@ -4,11 +4,11 @@ For demo purposes only.
 **The player should support**
 
 - [x]  **Show a thumbnail image while the video is loading**  
-Using FastImage for cache and quick display of thumbnails, using cover prop by the library.
+Using FastImage for cache and quick display of thumbnails, using **Poster** prop by the library.
 
 
 - [x]  **Ability to go to full screen mode when users move the device to landscape on both platforms**  
-Fullscreen capabilities from the library react-native-video are a bit buggy, decided to showcase a proof of concept of a manual Fullscreen on rotation.
+Fullscreen capabilities from the library react-native-video are a bit buggy, decided to showcase a proof of concept of fullscreen on manual rotation. 
 
 
 - [x]  **Ability to play/pause/etc**  
