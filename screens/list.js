@@ -4,11 +4,11 @@ import {
   Pressable,
   View,
   Text,
-  ImageBackground,
   useWindowDimensions,
 } from "react-native";
 import { Divider, Header, Slider, Icon } from "react-native-elements";
 import Carousel from "react-native-snap-carousel";
+import FastImage from "react-native-fast-image";
 
 import { AppContext } from "../resources/context";
 import mainStyles, { colors } from "../resources/styles";
@@ -52,7 +52,7 @@ export default ({ navigation }) => {
         }}
       >
         <Pressable onPress={() => navigateToVideo(item, index)}>
-          <ImageBackground source={{ uri: item.thumb }} style={styles.slide}>
+          <FastImage source={{ uri: item.thumb }} style={styles.slide}>
             <View style={styles.slideTop}>
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <Text style={styles.title}>{item.title}</Text>
@@ -90,7 +90,7 @@ export default ({ navigation }) => {
                 <Text style={styles.action}>Start Watching</Text>
               )}
             </View>
-          </ImageBackground>
+          </FastImage>
         </Pressable>
       </View>
     );
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
   },
   action: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
     textTransform: "uppercase",
-    fontWeight: "500",
+    fontWeight: "400",
   },
   timestamp: {
     textAlign: "center",

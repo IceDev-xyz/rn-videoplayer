@@ -15,6 +15,7 @@ import {
   Header,
   Input,
 } from "react-native-elements";
+import FastImage from "react-native-fast-image";
 import Video, { TextTrackType } from "react-native-video";
 import SwipeableRating from "react-native-swipeable-rating";
 
@@ -32,19 +33,21 @@ export default ({ navigation, route }) => {
   const [selectedSubtitle, setSelectedSubtitle] = useState("none");
   const [modalVisible, setModalVisible] = useState(false);
   const [rating, setRating] = useState(5);
-  const [isNavigating, setIsNavigating] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
   //
   const window = useWindowDimensions();
 
   // The video library is making navigation between screens slower, this is just a hot fix.
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsNavigating(false);
-      if (context[videoIndex]?.progress > 0) {
-        this.player.seek(context[videoIndex]?.progress);
-      }
-    }, 800);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => {
+    //   if (context[videoIndex]?.progress > 0) {
+    //     this.player.seek(context[videoIndex]?.progress);
+    //   }
+    // }, 500);
+    // return () => clearTimeout(timer);
+    if (context[videoIndex]?.progress > 0) {
+      this.player.seek(context[videoIndex]?.progress);
+    }
   }, []);
 
   // I'm not proud about this function, quick workaround after Android was having issues with subtitles.
@@ -182,57 +185,68 @@ export default ({ navigation, route }) => {
         containerStyle={mainStyles.headerContainer}
       />
 
-      {isNavigating ? (
-        <View style={styles.video} />
-      ) : (
-        <Video
-          source={{
-            uri: video.videoUrl,
-          }}
-          ref={(ref) => {
-            this.player = ref;
-          }}
-          controls={true}
-          poster={video.thumb}
-          posterResizeMode={"cover"}
-          onLoadStart={(info) => console.log(info)}
-          onLoad={(info) =>
-            setContext((prevState) => {
-              prevState[videoIndex].duration = info.duration;
-              return [...prevState];
-            })
-          }
-          onReadyForDisplay={() => console.log("Ready for display")}
-          onBuffer={(buffer) => console.log(buffer)}
-          onProgress={(info) =>
-            setContext((prevState) => {
-              prevState[videoIndex].progress = info.currentTime;
-              return [...prevState];
-            })
-          }
-          onError={() => alert("We are unable to load this video.")}
-          onSeek={(info) => console.log(info)}
-          style={fullScreen ? styles.videoFullscreen : styles.video}
-          onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
-          playInBackground={false}
-          onEnd={() => [
-            setContext((prevState) => {
-              prevState[videoIndex].completed = true;
-              return [...prevState];
-            }),
-            setModalVisible(true),
-          ]}
-          ///
-          automaticallyWaitsToMinimizeStalling
-          preferredForwardBufferDuration={30000}
-          resizeMode={"cover"}
-          textTracks={textTracks}
-          selectedTextTrack={{
-            type: "language",
-            value: selectedSubtitle,
-          }}
-        />
-      )}
+      {/* <FastImage
+        style={isNavigating ? { height: 0, width: 0 } : styles.video}
+        source={{
+          uri: video.thumb,
+        }}
+      /> */}
+
+      <Video
+        source={{
+          uri: video.videoUrl,
+        }}
+        ref={(ref) => {
+          this.player = ref;
+        }}
+        controls={true}
+        poster={video.thumb}
+        posterResizeMode={"cover"}
+        onLoadStart={(info) => console.log(info)}
+        onLoad={(info) =>
+          setContext((prevState) => {
+            prevState[videoIndex].duration = info.duration;
+            return [...prevState];
+          })
+        }
+        //onReadyForDisplay={() => setIsNavigating(false)}
+        onBuffer={(buffer) => console.log(buffer)}
+        onProgress={(info) =>
+          setContext((prevState) => {
+            prevState[videoIndex].progress = info.currentTime;
+            return [...prevState];
+          })
+        }
+        onError={() => alert("We are unable to load this video.")}
+        onSeek={(info) => console.log(info)}
+        style={
+          fullScreen
+            ? styles.videoFullscreen
+            : isNavigating
+            ? styles.videoHidden
+            : styles.video
+        }
+        onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
+        playInBackground={false}
+        onEnd={() => [
+          setContext((prevState) => {
+            prevState[videoIndex].completed = true;
+            return [...prevState];
+          }),
+          setModalVisible(true),
+        ]}
+        ///
+        onPlaybackRateChange={(info) => console.log(info)}
+        automaticallyWaitsToMinimizeStalling
+        preferredForwardBufferDuration={30000}
+        resizeMode={"cover"}
+        textTracks={textTracks}
+        selectedTextTrack={{
+          type: "language",
+          value: selectedSubtitle,
+        }}
+      />
+
       {!fullScreen && (
         <View style={{ flex: 1 }}>
           <ButtonGroup
@@ -262,6 +276,9 @@ const styles = StyleSheet.create({
   video: {
     width: "100%",
     height: 200,
+  },
+  videoHidden: {
+    height: 0,
   },
   videoFullscreen: {
     position: "absolute",
