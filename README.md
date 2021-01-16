@@ -1,5 +1,5 @@
 # rn-videoplayer
-For demo purposes only. The goal is to build a video player in react native that can work well on both iOS and Android. The player can be based on the package React Native Video (https://github.com/react-native-video/react-native-video).
+For demo purposes only. 
 
 **The player should support**
 
@@ -26,3 +26,6 @@ Star rating + input for comments added, also example of triggering events when t
 
 - [x]  **Bonus: Ability to show subtitles over the video**  
 Change subtitles on the fly. None, English, Spanish.
+
+
+**Brief:** The goal is to build a video player in react native that can work well on both iOS and Android. The player can be based on the package React Native Video (https://github.com/react-native-video/react-native-video).
