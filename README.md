@@ -16,7 +16,7 @@ Using props by the library.
 
 
 - [x]  **Ability to send events back when things such as video start, stop and end occur.**  
-The best to showcase, play a video, while playing go back, the list will display the time and allow users to resume watching it.
+The best way to showcase: Play a video, while playing go back, the list will now display the timestamp and allow users to resume watching it.
 
 
 - [x]  **Show a rating control when video ends allowing users to rate the video (doesn’t need to be a pretty UI)**  
