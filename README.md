@@ -4,8 +4,7 @@ For demo purposes only.
 **The player should support**
 
 - [x]  **Show a thumbnail image while the video is loading**  
-Currently is loading images from the same server as the videos, so sometimes the image is loaded and 1 second later the video is ready to play.  
-A good CDN (imgix.net) and a proper cache installed in the RN project (FastImage) will render the thumbnails faster. 
+Using FastImage for cache and quick display of thumbnails, using cover prop by the library.
 
 
 - [x]  **Ability to go to full screen mode when users move the device to landscape on both platforms**  
