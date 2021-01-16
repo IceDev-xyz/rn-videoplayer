@@ -201,7 +201,13 @@ export default ({ navigation, route }) => {
           style={fullScreen ? styles.videoFs : styles.video}
           onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
           playInBackground={false}
-          onEnd={() => setModalVisible(true)}
+          onEnd={() => [
+            setContext((prevState) => {
+              prevState[videoIndex].completed = true;
+              return [...prevState];
+            }),
+            setModalVisible(true),
+          ]}
           ///
           resizeMode={"cover"}
           textTracks={video.subs}

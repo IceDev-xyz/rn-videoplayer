@@ -37,7 +37,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
   },
   headerContainer: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.complementary + "30",
     borderBottomColor: "transparent",
   },
   headerTitle: {

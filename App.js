@@ -54,50 +54,57 @@ const App = () => {
 
 export default App;
 
+const demoURL = "https://arcticlab.xyz/demos/rn-videoplayer/";
+
 const videoList = [
   {
     _id: "TBD",
-    title: "Awesome Video",
+    title: "Switzerland",
     subtitle: "Works fine, subs in EN & ES",
-    thumb:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg",
-    videoUrl: "https://arcticlab.xyz/demos/rn-videoplayer/switzerland.mp4",
+    thumb: `${demoURL}thumb-switzerland.jpg`,
+    videoUrl: `${demoURL}switzerland.mp4`,
     subs: [
       {
         title: "English CC",
         language: "en",
 
-        uri: "https://arcticlab.xyz/demos/rn-videoplayer/en.vtt",
+        uri: `${demoURL}en.vtt`,
       },
       {
         title: "Español",
         language: "es",
-        uri: "https://arcticlab.xyz/demos/rn-videoplayer/es.vtt",
+        uri: `${demoURL}es.vtt`,
       },
     ],
   },
   {
     _id: "TBD2",
-    title: "Another nice video",
+    title: "Seattle",
     subtitle: "Works fine, subs in only in ES",
-    thumb:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg",
-    videoUrl: "https://arcticlab.xyz/demos/rn-videoplayer/switzerland.mp4",
+    thumb: `${demoURL}thumb-seattle.webp`,
+    videoUrl: `${demoURL}seattle.mp4`,
     subs: [
       {
         title: "Español",
         language: "es",
-        uri: "https://arcticlab.xyz/demos/rn-videoplayer/sintel_es.vtt",
+        uri: `${demoURL}es.vtt`,
       },
     ],
   },
   {
     _id: "TBD3",
+    title: "Vancouver",
+    subtitle: "4K, should take a bit to load.",
+    thumb: `${demoURL}thumb_vancouver.jpg`,
+    videoUrl: `${demoURL}vancouver.mp4`,
+    subs: [],
+  },
+  {
+    _id: "TBD4",
     title: "Oh! Bad video",
     subtitle: "URL wrong, video won't load.",
-    thumb:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg",
-    videoUrl: "https://arcticlab.xyz/demos/rn-videoplayer/_switzerland.mp4",
+    thumb: `${demoURL}thumb_not_found.jpg`,
+    videoUrl: `${demoURL}not_found.mp4`,
     subs: [],
   },
 ];
