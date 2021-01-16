@@ -3,7 +3,7 @@ For demo purposes only.
 
 **VideoDemo:** https://youtu.be/zVOMM3ExWKY
 
-**The player should support**
+**The player should support:**
 
 - [x]  **Show a thumbnail image while the video is loading**  
 Using FastImage for cache and quick display of thumbnails, using **Poster** prop by the library.
