@@ -46,7 +46,7 @@ export default ({ navigation, route }) => {
       if (context[videoIndex]?.progress > 0) {
         this.player.seek(context[videoIndex]?.progress);
       }
-    }, 500);
+    }, 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -186,18 +186,23 @@ export default ({ navigation, route }) => {
           controls={true}
           poster={video.thumb}
           posterResizeMode={"cover"}
-          //fullscreen={true}
           onLoadStart={(info) => console.log(info)}
-          onLoad={(info) => console.log(info)}
+          onLoad={(info) =>
+            setContext((prevState) => {
+              prevState[videoIndex].duration = info.duration;
+              return [...prevState];
+            })
+          }
+          onReadyForDisplay={() => console.log("Ready for display")}
           onBuffer={(buffer) => console.log(buffer)}
           onProgress={(info) =>
             setContext((prevState) => {
-              prevState[videoIndex].duration = info.playableDuration;
               prevState[videoIndex].progress = info.currentTime;
               return [...prevState];
             })
           }
-          onError={(error) => alert("We are unable to load this video.")}
+          onError={() => alert("We are unable to load this video.")}
+          onSeek={(info) => console.log(info)}
           style={fullScreen ? styles.videoFs : styles.video}
           onFullscreenPlayerDidDismiss={() => console.log("FS closed")}
           playInBackground={false}
@@ -209,6 +214,15 @@ export default ({ navigation, route }) => {
             setModalVisible(true),
           ]}
           ///
+          automaticallyWaitsToMinimizeStalling
+          preferredForwardBufferDuration={30000}
+          // bufferConfig={{
+          //   minBufferMs: 15000,
+          //   maxBufferMs: 50000,
+          //   bufferForPlaybackMs: 2500,
+          //   bufferForPlaybackAfterRebufferMs: 5000,
+          // }}
+          //
           resizeMode={"cover"}
           textTracks={video.subs}
           selectedTextTrack={{

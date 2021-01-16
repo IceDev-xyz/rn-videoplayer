@@ -33,7 +33,7 @@ export default StyleSheet.create({
   container: {
     backgroundColor: !debugStyles ? colors.background : "yellow",
     flex: 1,
-    //paddingBottom: 20,
+    paddingBottom: 20,
     justifyContent: "flex-start",
   },
   headerContainer: {

@@ -1,24 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import {
-  SafeAreaView,
-  Keyboard,
   StyleSheet,
   Pressable,
   View,
   Text,
   ImageBackground,
   useWindowDimensions,
-  StatusBar,
 } from "react-native";
-import {
-  Avatar,
-  Button,
-  Divider,
-  Header,
-  Slider,
-  Input,
-  Icon,
-} from "react-native-elements";
+import { Divider, Header, Slider, Icon } from "react-native-elements";
 import Carousel from "react-native-snap-carousel";
 
 import { AppContext } from "../resources/context";
@@ -45,17 +34,14 @@ export default ({ navigation }) => {
     let s = Math.floor(e % 60)
       .toString()
       .padStart(2, "0");
-
     return h + ":" + m + ":" + s;
   };
 
   renderSliderValue = (progress, duration) => {
-    console.log(progress, duration);
-    return (progress * 1) / duration;
+    return progress / duration;
   };
 
   renderCarouselItem = ({ item, index }) => {
-    console.log(item);
     return (
       <View
         style={{
@@ -114,17 +100,10 @@ export default ({ navigation }) => {
     <View style={mainStyles.container}>
       <Header
         barStyle="light-content"
-        //placement="left"
-        leftComponent={{
-          //icon: "settings",
-          //type: "material",
-          color: colors.secondary,
-        }}
         centerComponent={{
           text: "Video Player Demo",
           style: mainStyles.headerTitle,
         }}
-        //rightComponent={{ icon: "home", color: "#fff" }}
         containerStyle={mainStyles.headerContainer}
       />
       <Divider style={{ height: 10, backgroundColor: "transparent" }} />
@@ -142,12 +121,6 @@ export default ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  listItemContainer: {
-    backgroundColor: colors.complementary + "50",
-    borderRadius: 10,
-    marginBottom: 10,
-    marginHorizontal: 10,
-  },
   slide: {
     justifyContent: "space-between",
     width: "100%",

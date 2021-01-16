@@ -1,15 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useState, useEffect } from "react";
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  LogBox,
-} from "react-native";
-
 import { AppContext } from "./resources/context";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,16 +11,6 @@ const Stack = createStackNavigator();
 
 import VideoScreen from "./screens/video";
 import ListScreen from "./screens/list";
-
-function FakeScreen() {
-  return (
-    <SafeAreaView
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
-      <Text>Under Development</Text>
-    </SafeAreaView>
-  );
-}
 
 const App = () => {
   const [context, setContext] = useState([]);
