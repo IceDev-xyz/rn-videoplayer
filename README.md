@@ -1,7 +1,7 @@
 # rn-videoplayer
 For demo purposes only.
 
-**TestFlight Demo:** https://testflight.apple.com/join/xDtPbrks
+**TestFlight Demo:** https://testflight.apple.com/join/xDtPbrks  
 **Video Demo:** https://youtu.be/zVOMM3ExWKY
 
 **The player should support:**
